@@ -1,0 +1,63 @@
+name: DRANX
+options:
+  bundleIdPrefix: com.dranx
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    INFOPLIST_KEY_NSCameraUsageDescription: "DRANX uses the camera to scan bar bottles and menu items."
+    INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "DRANX can save and read photos for bottle scanning."
+
+targets:
+  DRANX:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: DRANX
+    resources:
+      - path: DRANX/Resources
+    settings:
+      base:
+        INFOPLIST_FILE: DRANX/Supporting/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.dranx.app
+        DEVELOPMENT_TEAM: ""
+    dependencies: []
+
+  DRANXTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: DRANXTests
+    settings:
+      base:
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/DRANX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DRANX"
+    dependencies:
+      - target: DRANX
+
+schemes:
+  DRANX:
+    build:
+      targets:
+        DRANX: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - DRANXTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
