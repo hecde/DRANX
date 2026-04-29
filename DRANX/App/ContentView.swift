@@ -3,8 +3,8 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            ScannerView()
-                .tabItem { Label("Scan", systemImage: "camera.viewfinder") }
+            HomeView()
+                .tabItem { Label("Home", systemImage: "house.fill") }
 
             DrinksView()
                 .tabItem { Label("Drinks", systemImage: "wineglass") }
