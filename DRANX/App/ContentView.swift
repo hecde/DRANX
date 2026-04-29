@@ -6,11 +6,11 @@ struct ContentView: View {
             ScannerView()
                 .tabItem { Label("Scan", systemImage: "camera.viewfinder") }
 
+            DrinksView()
+                .tabItem { Label("Drinks", systemImage: "wineglass") }
+
             RecipesView()
                 .tabItem { Label("Recipes", systemImage: "list.bullet.rectangle") }
-
-            MenuScanView()
-                .tabItem { Label("Menu", systemImage: "text.viewfinder") }
         }
         .tint(Color.Speakeasy.gold)
     }
