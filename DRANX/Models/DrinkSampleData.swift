@@ -93,7 +93,7 @@ enum DrinkSampleData {
             longitude: -81.5437
         ),
         knownIngredients: ["vodka", "ginger beer", "fresh lime juice", "mint"],
-        venueName: "Rusteak",
-        tags: ["mule", "vodka", "ginger", "citrus"]
+        tags: ["mule", "vodka", "ginger", "citrus"],
+        venueName: "Rusteak"
     )
 }
