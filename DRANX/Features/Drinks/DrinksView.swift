@@ -1,46 +1,39 @@
 import SwiftUI
 
 struct DrinksView: View {
-    @State private var cards           = DrinkSampleData.cards
+    @State private var cards          = DrinkSampleData.cards
     @State private var selectedFilter: DrinkCardCategory? = nil
 
-    private var filtered: [Binding<DrinkCard>] {
-        guard let filter = selectedFilter else { return [] }
-        return []
-    }
-
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                filterBar
-                    .padding(.vertical, 10)
+        VStack(spacing: 0) {
+            filterBar
+                .padding(.vertical, 10)
 
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach($cards) { $card in
-                            if selectedFilter == nil || card.category == selectedFilter {
-                                NavigationLink(destination: DrinkCardDetailView(card: $card)) {
-                                    DrinkCardView(card: card)
-                                }
-                                .buttonStyle(.plain)
+            ScrollView {
+                LazyVStack(spacing: 12) {
+                    ForEach($cards) { $card in
+                        if selectedFilter == nil || card.category == selectedFilter {
+                            NavigationLink(destination: DrinkCardDetailView(card: $card)) {
+                                DrinkCardView(card: card)
                             }
+                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 4)
-                    .padding(.bottom, 24)
                 }
+                .padding(.horizontal, 16)
+                .padding(.top, 4)
+                .padding(.bottom, 24)
             }
-            .background(Color.Speakeasy.background.ignoresSafeArea())
-            .navigationTitle("Drinks")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        // Import menu / add drink — next milestone
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundStyle(Color.Speakeasy.gold)
-                    }
+        }
+        .background(Color.Speakeasy.background.ignoresSafeArea())
+        .navigationTitle("Drinks")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    // Import menu / add drink — next milestone
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundStyle(Color.Speakeasy.gold)
                 }
             }
         }
@@ -93,6 +86,8 @@ struct FilterChip: View {
 }
 
 #Preview {
-    DrinksView()
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        DrinksView()
+    }
+    .preferredColorScheme(.dark)
 }

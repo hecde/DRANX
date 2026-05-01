@@ -1,21 +1,21 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Binding var selectedTab: Int
+
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 28) {
-                    headerSection
-                    featureCards
-                    recentSection
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 16)
-                .padding(.bottom, 40)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 28) {
+                headerSection
+                featureCards
+                recentSection
             }
-            .background(Color.Speakeasy.background.ignoresSafeArea())
-            .navigationBarHidden(true)
+            .padding(.horizontal, 20)
+            .padding(.top, 16)
+            .padding(.bottom, 40)
         }
+        .background(Color.Speakeasy.background.ignoresSafeArea())
+        .toolbar(.hidden, for: .navigationBar)
     }
 
     // MARK: Header
@@ -57,7 +57,7 @@ struct HomeView: View {
 
     private var featureCards: some View {
         VStack(spacing: 12) {
-            // Scan — full width, tall, primary CTA
+            // Scan — full width, tall, primary CTA — NavigationLink pushes within this stack
             NavigationLink(destination: ScannerView()) {
                 FeatureCard(
                     eyebrow: "SCAN THE BAR",
@@ -72,9 +72,9 @@ struct HomeView: View {
             }
             .buttonStyle(.plain)
 
-            // Drinks + Recipes side by side
             HStack(spacing: 12) {
-                NavigationLink(destination: DrinksView()) {
+                // Drinks — switches tab
+                Button { selectedTab = 1 } label: {
                     FeatureCard(
                         eyebrow: "DRINKS",
                         title: "Your passport.",
@@ -88,7 +88,8 @@ struct HomeView: View {
                 }
                 .buttonStyle(.plain)
 
-                NavigationLink(destination: RecipesView()) {
+                // Recipes — switches tab
+                Button { selectedTab = 2 } label: {
                     FeatureCard(
                         eyebrow: "RECIPES",
                         title: "Make it at home.",
@@ -109,13 +110,10 @@ struct HomeView: View {
 
     private var recentSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                Text("RECENTLY ADDED")
-                    .font(.sectionLabel)
-                    .foregroundStyle(Color.Speakeasy.ash)
-                    .kerning(1.5)
-                Spacer()
-            }
+            Text("RECENTLY ADDED")
+                .font(.sectionLabel)
+                .foregroundStyle(Color.Speakeasy.ash)
+                .kerning(1.5)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
@@ -156,14 +154,12 @@ private struct FeatureCard: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            // Background gradient
             LinearGradient(
                 colors: [gradientStart, gradientEnd],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
 
-            // Watermark symbol
             Image(systemName: symbol)
                 .font(.system(size: 110, weight: .thin))
                 .foregroundStyle(accentColor.opacity(0.07))
@@ -171,7 +167,6 @@ private struct FeatureCard: View {
                 .padding(.top, 12)
                 .padding(.trailing, -10)
 
-            // Subtle top accent line
             VStack {
                 Rectangle()
                     .fill(accentColor.opacity(0.5))
@@ -179,7 +174,6 @@ private struct FeatureCard: View {
                 Spacer()
             }
 
-            // Content
             VStack(alignment: .leading, spacing: 5) {
                 Text(eyebrow)
                     .font(.badgeText)
@@ -245,6 +239,8 @@ private struct RecentChip: View {
 }
 
 #Preview {
-    HomeView()
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        HomeView(selectedTab: .constant(0))
+    }
+    .preferredColorScheme(.dark)
 }

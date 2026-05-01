@@ -2,13 +2,16 @@ import SwiftUI
 
 struct ScannerView: View {
     var body: some View {
-        NavigationStack {
-            Text("Point your camera at bottles to detect what's available.")
-                .navigationTitle("Scan Bar")
-        }
+        Text("Point your camera at bottles to detect what's available.")
+            .foregroundStyle(Color.Speakeasy.parchment)
+            .navigationTitle("Scan Bar")
+            .background(Color.Speakeasy.background.ignoresSafeArea())
     }
 }
 
 #Preview {
-    ScannerView()
+    NavigationStack {
+        ScannerView()
+    }
+    .preferredColorScheme(.dark)
 }
